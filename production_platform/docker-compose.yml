@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+
+  # ── FastAPI Backend ────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: production_platform_backend
+    ports:
+      - "8000:8000"
+    # Loads ANTHROPIC_API_KEY and ALLOWED_ORIGINS from backend/.env
+    # Never hardcode secrets here — keep them in the env file
+    env_file:
+      - ./backend/.env
+    environment:
+      - MODULE_NAME=main
+      - VARIABLE_NAME=app
+      - PORT=8000
+    volumes:
+      - ./backend:/app
+    restart: always
+
+  # ── Next.js Frontend ───────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # NEXT_PUBLIC_* vars must be passed as build ARGs so Next.js
+        # can bake them into the JS bundle during `npm run build`.
+        # Change this URL if deploying to a remote server.
+        - NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
+    container_name: production_platform_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      # Also set at runtime for any server-side Next.js code
+      - NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
+    depends_on:
+      - backend
+    restart: always

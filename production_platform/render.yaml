@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: uniquant-backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+
+    # Pro plan: 4 GB RAM, 2 vCPUs — required for PyTorch + Chronos + GARCH + HMM
+    # Standard (2 GB) is too tight once PyTorch allocates its memory pool
+    plan: pro
+
+    # Render sets PORT automatically; our CMD uses ${PORT:-8000}
+    healthCheckPath: /health
+
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false          # set manually in Render dashboard — never commit this
+
+      - key: ALLOWED_ORIGINS
+        sync: false          # set to your Vercel URL once deployed, e.g.:
+                             # https://uniquant.vercel.app

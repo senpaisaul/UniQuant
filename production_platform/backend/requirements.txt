@@ -1,0 +1,26 @@
+fastapi>=0.110.0
+python-dotenv>=1.0.0
+uvicorn>=0.27.0
+pydantic>=2.6.0
+python-multipart>=0.0.9
+requests>=2.31.0
+pandas>=2.2.0
+numpy<2.0.0
+joblib>=1.3.0
+scikit-learn>=1.4.0
+yfinance>=0.2.54
+ta>=0.11.0
+scipy>=1.12.0
+
+# Layer 1 — Amazon Chronos foundation model (generative time-series)
+chronos-forecasting>=1.3.0
+torch>=2.1.0
+
+# Layer 2 — HMM market regime detection
+hmmlearn>=0.3.0
+
+# GARCH volatility calibration (Hybrid Chronos + GARCH intervals)
+arch>=6.0.0
+
+# Layer 4 — LLM coherence scoring via Claude Haiku
+anthropic>=0.30.0

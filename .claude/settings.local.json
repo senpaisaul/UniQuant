@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find C:UserssengaDownloadsUniQuant-main_legacy -type f -name *.py)",
+      "Bash(rd /s /q \"C:\\\\Users\\\\senga\\\\Downloads\\\\UniQuant-main\\\\production_platform\\\\frontend\\\\.next\")",
+      "Bash(python docs/generate_iteration_graphs.py)"
+    ]
+  }
+}
